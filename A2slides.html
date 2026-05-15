@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2 SIDE BY SIDE — One Decade Reunion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Inter:wght@300;400;700;900&family=Montserrat:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;1,400&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --accent-blue: #1a6bff;
+            --accent-cyan: #00d4ff;
+            --accent-orange: #ff6b2c;
+            --dark: #0a0e1a;
+            --dark-blue: #0d1525;
+            --text-light: #e8eaf0;
+            --text-muted: #7a8599;
+        }
+
+        body {
+            background: #000;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-light);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slideshow-container {
+            width: min(100vw, 177.78vh); /* 16:9 max width */
+            height: min(100vh, 56.25vw); /* 16:9 max height */
+            position: relative;
+            overflow: hidden;
+            background: var(--dark);
+        }
+
+        .feather-bg {
+            position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.03;
+            background: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M200 50 Q220 150 200 250 Q180 350 200 400 M200 50 Q240 120 260 200 Q280 280 260 350 M200 50 Q160 120 140 200 Q120 280 140 350' stroke='%231a6bff' fill='none' stroke-width='0.5' opacity='0.5'/%3E%3C/svg%3E") repeat;
+        }
+
+        /* ===== SLIDE SYSTEM ===== */
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 1.6s ease,
+                        transform 2s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 1.8s ease;
+            transform: scale(1.03);
+            filter: blur(4px) brightness(0.7);
+            overflow: hidden;
+        }
+        .slide.active {
+            opacity: 1; visibility: visible;
+            transform: scale(1);
+            filter: blur(0px) brightness(1);
+            z-index: 10;
+        }
+        .slide.exit-left {
+            opacity: 0;
+            transform: scale(0.95) translateX(-60px);
+            filter: blur(6px) brightness(0.5);
+            z-index: 5;
+        }
+        .slide.exit-right {
+            opacity: 0;
+            transform: scale(0.95) translateX(60px);
+            filter: blur(6px) brightness(0.5);
+            z-index: 5;
+        }
+
+        /* Child animations on active — smooth stagger */
+        .slide.active .anim { animation: smoothReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .slide.active .anim-d1 { animation-delay: 0.3s; }
+        .slide.active .anim-d2 { animation-delay: 0.6s; }
+        .slide.active .anim-d3 { animation-delay: 0.9s; }
+        .slide.active .anim-d4 { animation-delay: 1.1s; }
+        .slide.active .anim-d5 { animation-delay: 1.3s; }
+        .anim { opacity: 0; transform: translateY(30px); }
+
+        @keyframes smoothReveal {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+        @keyframes glowPulse {
+            0%,100% { transform: translate(-50%,-50%) scale(1); opacity:0.6; }
+            50% { transform: translate(-50%,-50%) scale(1.15); opacity:1; }
+        }
+        @keyframes orbFloat {
+            0%,100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-25px) scale(1.1); }
+        }
+        @keyframes scrollFilm { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+        /* ===== HERO ===== */
+        .slide-hero { background: var(--dark); }
+
+        .hero-photo-grid-wrapper {
+            position: absolute; inset: -40%;
+            transform: rotate(-30deg) scale(1.3);
+            opacity: 0.5; filter: grayscale(80%) brightness(0.8); z-index: 1;
+        }
+        .hero-photo-grid {
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px;
+            width: 100%; height: 100%;
+        }
+        .hero-photo-grid .grid-photo {
+            background: #1a2030; border: 2px solid rgba(255,255,255,0.08);
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.4); overflow: hidden;
+        }
+        .hero-photo-grid .grid-photo:nth-child(odd) { aspect-ratio: 1/1; }
+        .hero-photo-grid .grid-photo:nth-child(even) { aspect-ratio: 4/3; }
+        .hero-photo-grid .grid-photo img { width:100%; height:100%; object-fit:cover; }
+        .hero-photo-grid .grid-photo .ph {
+            width:100%; height:100%; min-height:100px;
+            background: linear-gradient(135deg,#151d2e,#1a2540);
+            display:flex; align-items:center; justify-content:center;
+            font-family:'Space Mono',monospace; font-size:8px; color:#2a3550;
+        }
+
+        .hero-gradient-overlay {
+            position: absolute; inset: 0; z-index: 2;
+            background: linear-gradient(180deg, var(--dark) 0%, rgba(10,14,26,0.6) 40%, rgba(10,14,26,0.3) 70%, var(--dark) 100%),
+                        radial-gradient(ellipse at center, transparent 30%, var(--dark) 80%);
+        }
+
+        .hero-glow {
+            position: absolute; width:600px; height:600px; border-radius:50%;
+            background: radial-gradient(circle, rgba(26,107,255,0.12) 0%, transparent 70%);
+            top:50%; left:50%; transform:translate(-50%,-50%);
+            animation: glowPulse 6s ease-in-out infinite; z-index: 3;
+        }
+
+        .orb { position:absolute; border-radius:50%; pointer-events:none; animation:orbFloat 10s ease-in-out infinite; z-index:5; }
+        .orb-1 { width:300px; height:300px; top:10%; left:5%; background:radial-gradient(circle,rgba(26,107,255,0.25) 0%,transparent 70%); }
+        .orb-2 { width:250px; height:250px; bottom:15%; right:10%; background:radial-gradient(circle,rgba(255,107,44,0.2) 0%,transparent 70%); animation-delay:3s; }
+
+        .hero-content { position:relative; z-index:10; text-align:center; }
+        .hero-logo { margin-bottom:20px; }
+        .hero-logo img { max-width:120px; max-height:120px; }
+        .hero-content .label {
+            font-family:'Space Mono',monospace; font-size:11px; letter-spacing:5px;
+            color:var(--accent-cyan); margin-bottom:24px;
+        }
+        .hero-content h1 {
+            font-family:'Montserrat',sans-serif; font-weight:900;
+            font-size:clamp(50px,11vw,130px); letter-spacing:-3px; line-height:0.9;
+            background:linear-gradient(135deg,#fff 0%,var(--accent-cyan) 50%,var(--accent-blue) 100%);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        .hero-content .subtitle {
+            font-family:'Ephesis',cursive;
+            font-size:clamp(20px,3.5vw,32px); color:var(--text-muted); margin-top:14px;
+        }
+        .hero-content .year-badge {
+            display:inline-block; margin-top:40px; padding:10px 28px;
+            border:1px solid rgba(26,107,255,0.4); border-radius:2px;
+            font-family:'Montserrat',sans-serif; font-weight:400; font-size:12px; letter-spacing:3px;
+            color:var(--accent-cyan); background:rgba(26,107,255,0.05);
+        }
+
+        /* ===== GROUP ===== */
+        .slide-group { background: var(--dark); }
+        .group-frame {
+            width:55%; height:50%; overflow:hidden; position:relative;
+            border:1px solid rgba(26,107,255,0.3);
+            filter: grayscale(40%) brightness(0.85);
+            transition: width 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        height 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 2s ease,
+                        border 1s ease;
+        }
+        .slide-group.active .group-frame {
+            width: 100%; height: 100%;
+            filter: grayscale(10%) brightness(0.9);
+            border-color: transparent;
+            transition-delay: 1s;
+        }
+        .group-frame img { width:100%; height:100%; object-fit:cover; }
+        .group-frame .placeholder {
+            width:100%; height:100%; background:var(--dark-blue);
+            display:flex; align-items:center; justify-content:center;
+            font-family:'Space Mono',monospace; font-size:13px; color:var(--text-muted);
+        }
+        .group-caption {
+            position:absolute; bottom:50px; left:50%; transform:translateX(-50%);
+            text-align:center; z-index:10;
+            opacity: 0; transform: translateX(-50%) translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition-delay: 1.5s;
+        }
+        .slide-group.active .group-caption {
+            opacity: 1; transform: translateX(-50%) translateY(0);
+        }
+        .group-caption span { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:4px; color:var(--accent-cyan); }
+        .group-caption h2 { font-weight:900; font-size:48px; color:#fff; text-shadow:0 2px 30px rgba(26,107,255,0.4); }
+
+        /* ===== GRID ===== */
+        .slide-grid {
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-blue) 50%, var(--dark) 100%);
+            flex-direction: column; padding: 60px;
+        }
+        .grid-header { text-align:center; margin-bottom:40px; }
+        .grid-header h2 { font-weight:900; font-size:clamp(36px,6vw,60px); letter-spacing:-2px; }
+        .grid-header p { font-family:'Playfair Display',serif; font-style:italic; font-size:20px; color:var(--text-muted); margin-top:8px; }
+
+        .photo-grid {
+            display:grid; grid-template-columns:repeat(8,1fr); gap:4px;
+            max-width:1000px; width:100%;
+        }
+        .grid-item {
+            aspect-ratio:1; overflow:hidden; position:relative;
+            filter:grayscale(70%) brightness(0.8);
+            transition: filter 1.2s ease, box-shadow 1.2s ease;
+        }
+        .grid-item.glow {
+            filter:grayscale(0%) brightness(1.1);
+            box-shadow:0 0 25px rgba(26,107,255,0.4), 0 0 50px rgba(0,212,255,0.15);
+        }
+        .grid-item .placeholder {
+            width:100%; height:100%; background:#141a2a;
+            display:flex; align-items:center; justify-content:center;
+            font-family:'Space Mono',monospace; font-size:10px; color:#3a4560;
+            border:1px solid rgba(26,107,255,0.1);
+        }
+        .grid-item img { width:100%; height:100%; object-fit:cover; }
+
+        /* ===== EDITORIAL ===== */
+        .slide-editorial {
+            background: var(--dark);
+        }
+        .editorial-block {
+            max-width:1100px; width:100%; padding:0 60px;
+            display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+        }
+        .editorial-image {
+            width:100%; aspect-ratio:4/5; overflow:hidden;
+            filter:grayscale(50%) brightness(0.85);
+            border:1px solid rgba(26,107,255,0.15);
+            transition: filter 0.6s;
+        }
+        .editorial-image:hover { filter:grayscale(0%) brightness(1); }
+        .editorial-image .placeholder {
+            width:100%; height:100%; background:var(--dark-blue);
+            display:flex; align-items:center; justify-content:center;
+            font-family:'Space Mono',monospace; font-size:12px; color:var(--text-muted);
+        }
+        .editorial-image img { width:100%; height:100%; object-fit:cover; }
+        .editorial-text { padding:20px 0; }
+        .editorial-text .tag {
+            font-family:'Space Mono',monospace; font-size:13px; letter-spacing:4px;
+            text-transform:uppercase; color:var(--accent-cyan); margin-bottom:14px;
+        }
+        .editorial-text h3 { font-weight:900; font-size:clamp(32px,5vw,52px); letter-spacing:-1px; line-height:1.1; margin-bottom:16px; }
+        .editorial-text p { font-family:'Playfair Display',serif; font-style:italic; font-size:20px; color:var(--text-muted); line-height:1.8; }
+        .editorial-text::before {
+            content:''; display:block; width:40px; height:2px;
+            background:linear-gradient(90deg,var(--accent-blue),var(--accent-cyan));
+            margin-bottom:20px;
+        }
+
+        /* ===== TIMELINE ===== */
+        .slide-timeline {
+            background: linear-gradient(180deg, var(--dark) 0%, rgba(13,21,37,0.8) 100%);
+            flex-direction: column; padding: 60px;
+        }
+        .timeline-header { text-align:center; margin-bottom:50px; }
+        .timeline-header h2 { font-weight:900; font-size:clamp(36px,6vw,56px); letter-spacing:-1px; }
+        .timeline-header p { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:3px; color:var(--text-muted); margin-top:10px; }
+        .timeline { max-width:700px; width:100%; position:relative; padding-left:40px; }
+        .timeline::before {
+            content:''; position:absolute; left:0; top:0; height:0; width:2px;
+            background:linear-gradient(180deg,var(--accent-blue),var(--accent-cyan),var(--accent-orange));
+            transition: height 2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .slide-timeline.active .timeline::before {
+            height: 100%;
+            transition-delay: 0.5s;
+        }
+        .timeline-item {
+            margin-bottom:40px; position:relative; padding-left:30px;
+            opacity: 0; transform: translateX(-20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .slide-timeline.active .timeline-item:nth-child(1) { opacity:1; transform:translateX(0); transition-delay:0.8s; }
+        .slide-timeline.active .timeline-item:nth-child(2) { opacity:1; transform:translateX(0); transition-delay:1.2s; }
+        .slide-timeline.active .timeline-item:nth-child(3) { opacity:1; transform:translateX(0); transition-delay:1.6s; }
+        .slide-timeline.active .timeline-item:nth-child(4) { opacity:1; transform:translateX(0); transition-delay:2.0s; }
+        .timeline-item::before {
+            content:''; position:absolute; left:-44px; top:6px;
+            width:10px; height:10px; border-radius:50%;
+            background:var(--accent-cyan); box-shadow:0 0 12px var(--accent-cyan);
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .slide-timeline.active .timeline-item:nth-child(1)::before { transform:scale(1); transition-delay:0.8s; }
+        .slide-timeline.active .timeline-item:nth-child(2)::before { transform:scale(1); transition-delay:1.2s; }
+        .slide-timeline.active .timeline-item:nth-child(3)::before { transform:scale(1); transition-delay:1.6s; }
+        .slide-timeline.active .timeline-item:nth-child(4)::before { transform:scale(1); transition-delay:2.0s; }
+        .timeline-item .year-label { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:3px; color:var(--accent-cyan); margin-bottom:6px; }
+        .timeline-item h4 { font-weight:700; font-size:24px; margin-bottom:4px; }
+        .timeline-item p { font-size:16px; color:var(--text-muted); line-height:1.6; }
+
+        /* ===== FILM STRIP ===== */
+        .slide-filmstrip {
+            background: var(--dark-blue);
+            flex-direction: column;
+            justify-content: center;
+            border-top:1px solid rgba(26,107,255,0.1);
+            border-bottom:1px solid rgba(26,107,255,0.1);
+            overflow: hidden;
+        }
+        .filmstrip-label {
+            text-align:center; font-family:'Space Mono',monospace;
+            font-size:13px; letter-spacing:5px; color:var(--text-muted); margin-bottom:40px;
+        }
+        .filmstrip-wrapper {
+            width: 100%; overflow: hidden;
+        }
+        .filmstrip { display:flex; gap:0; animation:scrollFilm 60s linear infinite; width:max-content; }
+        .filmstrip-item {
+            width:360px; height:240px; flex-shrink:0; overflow:hidden;
+            filter: grayscale(20%) contrast(1.1) brightness(0.95) saturate(1.05);
+            transition:filter 0.4s;
+            margin: 0 4px;
+        }
+        .filmstrip-item:hover { filter:grayscale(0%) brightness(1); }
+        .filmstrip-item .placeholder {
+            width:100%; height:100%; background:#0f1520;
+            display:flex; align-items:center; justify-content:center;
+            font-family:'Space Mono',monospace; font-size:10px; color:#2a3550;
+        }
+        .filmstrip-item img { width:100%; height:100%; object-fit:cover; }
+
+        /* ===== CLOSING ===== */
+        .slide-closing {
+            background: radial-gradient(ellipse at center, rgba(26,107,255,0.06) 0%, transparent 60%), var(--dark);
+            flex-direction: column; text-align: center;
+        }
+        .closing-glow {
+            position:absolute; width:500px; height:500px; border-radius:50%;
+            background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,transparent 70%);
+            top:50%; left:50%; transform:translate(-50%,-50%);
+        }
+        .slide-closing .tag {
+            font-family:'Space Mono',monospace; font-size:14px; letter-spacing:5px;
+            color:var(--accent-cyan); margin-bottom:20px; position:relative; z-index:2;
+        }
+        .slide-closing h2 {
+            font-weight:900; font-size:clamp(44px,9vw,84px); letter-spacing:-2px;
+            line-height:1; margin-bottom:20px; position:relative; z-index:2;
+            background:linear-gradient(135deg,#fff,var(--accent-cyan));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        .slide-closing p {
+            font-family:'Playfair Display',serif; font-style:italic;
+            font-size:22px; color:var(--text-muted); max-width:560px; line-height:1.8;
+            position:relative; z-index:2;
+        }
+
+        /* ===== NAVIGATION — Corner Arrows ===== */
+        .nav-arrow {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            width: 44px; height: 44px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            background: rgba(10,14,26,0.6);
+            color: rgba(255,255,255,0.7);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s ease;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+        }
+        .nav-arrow:hover {
+            background: rgba(26,107,255,0.2);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+        .nav-arrow:disabled { opacity: 0; pointer-events: none; }
+        .nav-arrow.prev { left: 20px; }
+        .nav-arrow.next { right: 20px; }
+
+        .nav-counter {
+            position: absolute;
+            bottom: 16px; right: 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px; letter-spacing: 2px;
+            color: rgba(255,255,255,0.3);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slideshow-container">
+<div class="feather-bg"></div>
+
+<!-- SLIDE 1: HERO -->
+<div class="slide slide-hero active">
+    <div class="hero-photo-grid-wrapper">
+        <div class="hero-photo-grid">
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_9550.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_9556.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_9588.jpg"></div>
+            <div class="grid-photo"><img src="photos/12a2TranBien-7862"></div>
+            <div class="grid-photo"><img src="photos/_MG_2358.jpg"></div>
+            <div class="grid-photo"><img src="photos/12a2TranBien-7921"></div>
+            <div class="grid-photo"><img src="photos/_MG_9588"></div>
+            <div class="grid-photo"><img src="photos/_MG_2662.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2553.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_9550.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_9556.jpg"></div>
+            <div class="grid-photo"><img src="photos/12a2TranBien-7921.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_9588.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_9588.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2449.jpg"></div>
+            <div class="grid-photo"><img src="photos/12a2TranBien-7921.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2553.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_9550.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+            <div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
+
+        </div>
+    </div>
+    <div class="hero-gradient-overlay"></div>
+    <div class="hero-glow"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="hero-content">
+        <div class="hero-logo anim anim-d1"><img src="photos\logo_10Nam_A2.png" alt="Logo"></div>
+        <div class="label anim anim-d1">THPT TRAN BIEN</div>
+        <h1 class="anim anim-d2">A2 SIDE BY SIDE</h1>
+        <div class="subtitle anim anim-d3">Ky Niem 10 Nam Ngay Ra Truong</div>
+        <div class="year-badge anim anim-d4">2016 ━━ 2026</div>
+    </div>
+</div>
+
+<!-- SLIDE 2: GROUP PHOTO -->
+<div class="slide slide-group">
+    <div class="group-frame">
+         <img src="photos/_MG_2553.jpg"alt="Group Photo">
+    </div>
+    <div class="group-caption anim anim-d2">
+        <span>RECONNECTING THE TIMELINE</span>
+        <h2>Together Again</h2>
+    </div>
+</div>
+
+<!-- SLIDE 3: FACES GRID -->
+<div class="slide slide-grid">
+    <div class="grid-header anim anim-d1">
+        <h2>The Faces</h2>
+        <p>Every story starts with a face we remember</p>
+    </div>
+    <div class="photo-grid">
+        <div class="grid-item"><div class="placeholder">01</div></div>
+        <div class="grid-item"><div class="placeholder">02</div></div>
+        <div class="grid-item"><div class="placeholder">03</div></div>
+        <div class="grid-item"><div class="placeholder">04</div></div>
+        <div class="grid-item"><div class="placeholder">05</div></div>
+        <div class="grid-item"><div class="placeholder">06</div></div>
+        <div class="grid-item"><div class="placeholder">07</div></div>
+        <div class="grid-item"><div class="placeholder">08</div></div>
+        <div class="grid-item"><div class="placeholder">09</div></div>
+        <div class="grid-item"><div class="placeholder">10</div></div>
+        <div class="grid-item"><div class="placeholder">11</div></div>
+        <div class="grid-item"><div class="placeholder">12</div></div>
+        <div class="grid-item"><div class="placeholder">13</div></div>
+        <div class="grid-item"><div class="placeholder">14</div></div>
+        <div class="grid-item"><div class="placeholder">15</div></div>
+        <div class="grid-item"><div class="placeholder">16</div></div>
+        <div class="grid-item"><div class="placeholder">17</div></div>
+        <div class="grid-item"><div class="placeholder">18</div></div>
+        <div class="grid-item"><div class="placeholder">19</div></div>
+        <div class="grid-item"><div class="placeholder">20</div></div>
+        <div class="grid-item"><div class="placeholder">21</div></div>
+        <div class="grid-item"><div class="placeholder">22</div></div>
+        <div class="grid-item"><div class="placeholder">23</div></div>
+        <div class="grid-item"><div class="placeholder">24</div></div>
+        <div class="grid-item"><div class="placeholder">25</div></div>
+        <div class="grid-item"><div class="placeholder">26</div></div>
+        <div class="grid-item"><div class="placeholder">27</div></div>
+        <div class="grid-item"><div class="placeholder">28</div></div>
+        <div class="grid-item"><div class="placeholder">29</div></div>
+        <div class="grid-item"><div class="placeholder">30</div></div>
+        <div class="grid-item"><div class="placeholder">31</div></div>
+        <div class="grid-item"><div class="placeholder">32</div></div>
+    </div>
+</div>
+
+<!-- SLIDE 4: EDITORIAL MEMORY 1 -->
+<div class="slide slide-editorial">
+    <div class="editorial-block">
+        <div class="editorial-image anim anim-d1">
+            <div class="placeholder">[ MEMORY PHOTO 1 ]</div>
+        </div>
+        <div class="editorial-text anim anim-d2">
+            <div class="tag">Memory</div>
+            <h3>Your Title Here</h3>
+            <p>Add your caption or story for this memory.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 5: EDITORIAL MEMORY 2 -->
+<div class="slide slide-editorial">
+    <div class="editorial-block" style="direction:rtl">
+        <div class="editorial-image anim anim-d1" style="direction:ltr">
+            <div class="placeholder">[ MEMORY PHOTO 2 ]</div>
+        </div>
+        <div class="editorial-text anim anim-d2" style="direction:ltr">
+            <div class="tag">Memory</div>
+            <h3>Your Title Here</h3>
+            <p>Add your caption or story for this memory.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 6: EDITORIAL MEMORY 3 -->
+<div class="slide slide-editorial">
+    <div class="editorial-block">
+        <div class="editorial-image anim anim-d1">
+            <div class="placeholder">[ MEMORY PHOTO 3 ]</div>
+        </div>
+        <div class="editorial-text anim anim-d2">
+            <div class="tag">Memory</div>
+            <h3>Your Title Here</h3>
+            <p>Add your caption or story for this memory.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 7: TIMELINE -->
+<div class="slide slide-timeline">
+    <div class="timeline-header anim anim-d1">
+        <h2>The Timeline</h2>
+        <p>2016 — 2026</p>
+    </div>
+    <div class="timeline anim anim-d2">
+        <div class="timeline-item">
+            <div class="year-label">2016</div>
+            <h4>Your Event Title</h4>
+            <p>Add your story for this year.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="year-label">2018</div>
+            <h4>Your Event Title</h4>
+            <p>Add your story for this year.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="year-label">2021</div>
+            <h4>Your Event Title</h4>
+            <p>Add your story for this year.</p>
+        </div>
+        <div class="timeline-item">
+            <div class="year-label">2026</div>
+            <h4>Your Event Title</h4>
+            <p>Add your story for this year.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 8: FILM STRIP -->
+<div class="slide slide-filmstrip">
+    <div class="filmstrip-label anim anim-d1">THE ARCHIVES — A DECADE IN FRAMES</div>
+    <div class="filmstrip-wrapper">
+        <div class="filmstrip">
+           <div class="filmstrip-item"><img src="photos/12a2TranBien-7997.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2443.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_9556.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/12a2TranBien-7862.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2477.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2264.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/12a2TranBien-7911.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2662.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2358.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/12a2TranBien-8020.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_9719.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2445.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/12a2TranBien-7784.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2747.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_9588.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2330.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/12a2TranBien-7972.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2507.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_9563.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2421.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/12a2TranBien-7921.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2464.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2779.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_9550.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/12a2TranBien-8061.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2714.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2468.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/12a2TranBien-7877.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2553.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2449.jpg" loading="lazy" alt=""></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 9: CLOSING -->
+<div class="slide slide-closing">
+    <div class="closing-glow"></div>
+    <div class="tag anim anim-d1">YOUR CLOSING LABEL</div>
+    <h2 class="anim anim-d2">Your Closing Title</h2>
+    <p class="anim anim-d3">Add your closing message here.</p>
+</div>
+
+<!-- NAVIGATION -->
+<button class="nav-arrow prev" id="prevBtn" aria-label="Previous slide">&#9664;</button>
+<button class="nav-arrow next" id="nextBtn" aria-label="Next slide">&#9654;</button>
+<span class="nav-counter" id="slideCounter">1 / 9</span>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    let current = 0;
+    let isAnimating = false;
+
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const counter = document.getElementById('slideCounter');
+
+    function goToSlide(n) {
+        if (n === current || isAnimating) return;
+        isAnimating = true;
+
+        const direction = n > current ? 'left' : 'right';
+        const exitClass = direction === 'left' ? 'exit-left' : 'exit-right';
+
+        // Reset anim classes on new slide
+        slides[n].querySelectorAll('.anim').forEach(el => {
+            el.style.animation = 'none';
+            el.offsetHeight;
+            el.style.animation = '';
+        });
+
+        // Exit current
+        slides[current].classList.remove('active');
+        slides[current].classList.add(exitClass);
+
+        // Enter new slide after a gentle pause
+        setTimeout(() => {
+            slides[n].classList.add('active');
+        }, 300);
+
+        // Cleanup after transition completes
+        setTimeout(() => {
+            slides[current].classList.remove(exitClass);
+            current = n;
+            updateNav();
+            isAnimating = false;
+        }, 2000);
+
+        counter.textContent = (n + 1) + ' / ' + total;
+    }
+
+    function updateNav() {
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === total - 1;
+    }
+
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); if (current > 0) goToSlide(current - 1); });
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); if (current < total - 1) goToSlide(current + 1); });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+            e.preventDefault();
+            if (current < total - 1) goToSlide(current + 1);
+        }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (current > 0) goToSlide(current - 1);
+        }
+    });
+
+    // Click anywhere to advance
+    document.querySelector('.slideshow-container').addEventListener('click', (e) => {
+        if (e.target.closest('.nav-arrow')) return;
+        if (current < total - 1) goToSlide(current + 1);
+    });
+
+    updateNav();
+
+    // Random glow effect on grid items — one at a time, 2s delay on first visit
+    let glowInterval = null;
+    let glowStarted = false;
+
+    function startGlow() {
+        const gridItems = document.querySelectorAll('.grid-item');
+        if (!gridItems.length) return;
+        if (glowInterval) clearInterval(glowInterval);
+
+        const delay = glowStarted ? 0 : 2000;
+        glowStarted = true;
+
+        setTimeout(() => {
+            glowInterval = setInterval(() => {
+                gridItems.forEach(item => item.classList.remove('glow'));
+                const i = Math.floor(Math.random() * gridItems.length);
+                gridItems[i].classList.add('glow');
+            }, 700);
+        }, delay);
+    }
+
+    startGlow();
+</script>
+
+</div><!-- end slideshow-container -->
+
+</body>
+</html>
