@@ -204,17 +204,77 @@
         .group-caption span { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:4px; color:var(--accent-cyan); }
         .group-caption h2 { font-weight:900; font-size:48px; color:#fff; text-shadow:0 2px 30px rgba(26,107,255,0.4); }
 
+/* ===== CONFESSIONS SLIDE (MOVIE CREDITS STYLE) ===== */
+.slide-confessions {
+    background: var(--dark);
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.confession-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.confession-scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    padding: 120px 20px;
+    animation: scrollCredits 25s linear infinite;
+}
+
+/* pause control */
+.confession-wrapper.paused .confession-scroll {
+    animation-play-state: paused;
+}
+
+@keyframes scrollCredits {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.confession-block {
+    max-width: 700px;
+    text-align: center;
+    opacity: 0.9;
+}
+
+.confession-block h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--accent-cyan);
+    letter-spacing: 2px;
+}
+
+.confession-block p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+
         /* ===== GRID ===== */
         .slide-grid {
-            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-blue) 50%, var(--dark) 100%);
-            flex-direction: column; padding: 60px;
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-blue) 50%, var(--dark) 100%);    justify-content: center;
+            flex-direction: column; padding: 30px;
         }
         .grid-header { text-align:center; margin-bottom:40px; }
         .grid-header h2 { font-weight:900; font-size:clamp(36px,6vw,60px); letter-spacing:-2px; }
         .grid-header p { font-family:'Playfair Display',serif; font-style:italic; font-size:20px; color:var(--text-muted); margin-top:8px; }
 
         .photo-grid {
-            display:grid; grid-template-columns:repeat(8,1fr); gap:10px;
+            display:grid; grid-template-columns:repeat(8,90px); gap:6px;justify-content: center;
             max-width:1000px; width:100%;
         }
         .grid-item {
@@ -472,8 +532,33 @@
          <img src="photos/_MG_2553.jpg"alt="Group Photo">
     </div>
     <div class="group-caption anim anim-d2">
-        <span>RECONNECTING THE TIMELINE</span>
-        <h2>Together Again</h2>
+        <span>GẶP LẠI NHAU<span>
+        <h2>Sau Một Thập Kỷ</h2>
+    </div>
+</div>
+
+
+<!-- SLIDE 0: CONFESSIONS -->
+<div class="slide slide-confessions">
+    <div class="confession-wrapper" id="confessionWrapper">
+        <div class="confession-scroll" id="confessionScroll">
+
+            <div class="confession-block">
+                <h3>Confession #1</h3>
+                <p>Write your message or memory here.</p>
+            </div>
+
+            <div class="confession-block">
+                <h3>Confession #2</h3>
+                <p>Another memory, joke, or message.</p>
+            </div>
+
+            <div class="confession-block">
+                <h3>Confession #3</h3>
+                <p>Keep adding as many as you want.</p>
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -749,9 +834,33 @@
     }
 
     startGlow();
+
+// ===== CONFESSIONS PAUSE ON HOVER / CLICK =====
+    const confessionWrapper = document.getElementById('confessionWrapper');
+
+    if (confessionWrapper) {
+        // Pause on hover
+        confessionWrapper.addEventListener('mouseenter', () => {
+            confessionWrapper.classList.add('paused');
+        });
+
+        confessionWrapper.addEventListener('mouseleave', () => {
+            confessionWrapper.classList.remove('paused');
+        });
+
+        // Toggle pause on click
+        confessionWrapper.addEventListener('click', () => {
+            confessionWrapper.classList.toggle('paused');
+        });
+    }
+
+
+
 </script>
 
 </div><!-- end slideshow-container -->
 
 </body>
 </html>
+
+
