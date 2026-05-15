@@ -214,17 +214,22 @@
         .grid-header p { font-family:'Playfair Display',serif; font-style:italic; font-size:20px; color:var(--text-muted); margin-top:8px; }
 
         .photo-grid {
-            display:grid; grid-template-columns:repeat(8,1fr); gap:4px;
+            display:grid; grid-template-columns:repeat(8,1fr); gap:10px;
             max-width:1000px; width:100%;
         }
         .grid-item {
             aspect-ratio:1; overflow:hidden; position:relative;
-            filter:grayscale(70%) brightness(0.8);
+            filter:grayscale(10%) brightness(0.8);
             transition: filter 1.2s ease, box-shadow 1.2s ease;
         }
         .grid-item.glow {
-            filter:grayscale(0%) brightness(1.1);
-            box-shadow:0 0 25px rgba(26,107,255,0.4), 0 0 50px rgba(0,212,255,0.15);
+            filter:grayscale(0%) brightness(1.15);
+              box-shadow:
+        0 0 0 2px rgba(0, 212, 255, 0.35),
+        0 0 25px rgba(0, 212, 255, 0.8),
+        0 0 60px rgba(26, 107, 255, 0.4);
+    transform: scale(1.05);
+    z-index: 5;
         }
         .grid-item .placeholder {
             width:100%; height:100%; background:#141a2a;
@@ -244,7 +249,7 @@
         }
         .editorial-image {
             width:100%; aspect-ratio:4/5; overflow:hidden;
-            filter:grayscale(50%) brightness(0.85);
+            filter:grayscale(10%) brightness(0.85);
             border:1px solid rgba(26,107,255,0.15);
             transition: filter 0.6s;
         }
@@ -412,39 +417,39 @@
     <div class="hero-photo-grid-wrapper">
         <div class="hero-photo-grid">
 <div class="grid-photo"><img src="photos/12a2TranBien-7784.jpg"></div>
-<div class="grid-photo"><img src="photos/12a2TranBien-7862.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2662.jpg"></div>
 <div class="grid-photo"><img src="photos/12a2TranBien-7877.jpg"></div>
-<div class="grid-photo"><img src="photos/12a2TranBien-7911.jpg"></div>
-<div class="grid-photo"><img src="photos/12a2TranBien-7921.jpg"></div>
-<div class="grid-photo"><img src="photos/12a2TranBien-7972.jpg"></div>
-<div class="grid-photo"><img src="photos/12a2TranBien-7997.jpg"></div>
-<div class="grid-photo"><img src="photos/12a2TranBien-8020.jpg"></div>
-<div class="grid-photo"><img src="photos/12a2TranBien-8061.jpg"></div>
-
-<div class="grid-photo"><img src="photos/_MG_2264.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2330.jpg"></div>
 <div class="grid-photo"><img src="photos/_MG_2358.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2421.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2443.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2445.jpg"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7921.jpg"></div>
 <div class="grid-photo"><img src="photos/_MG_2449.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2464.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2468.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2477.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2507.jpg"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7997.jpg"></div>
 <div class="grid-photo"><img src="photos/_MG_2553.jpg"></div>
 <div class="grid-photo"><img src="photos/_MG_2662.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2714.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2747.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_2779.jpg"></div>
-
 <div class="grid-photo"><img src="photos/_MG_9550.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_9556.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_9563.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_9588.jpg"></div>
-<div class="grid-photo"><img src="photos/_MG_9719.jpg"></div>
 
-<div class="grid-photo"><img src="photos/logo_10Nam_A2.png"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7784.jpg"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7877.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2662.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2358.jpg"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7921.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2449.jpg"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7997.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2553.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2662.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_9550.jpg"></div>
+
+<div class="grid-photo"><img src="photos/12a2TranBien-7784.jpg"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7877.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2662.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2358.jpg"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7921.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2449.jpg"></div>
+<div class="grid-photo"><img src="photos/12a2TranBien-7997.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2553.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_2662.jpg"></div>
+<div class="grid-photo"><img src="photos/_MG_9550.jpg"></div>
+
+
 
         </div>
     </div>
@@ -453,7 +458,7 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="hero-content">
-        <div class="hero-logo anim anim-d1"><img src="photos\logo_10Nam_A2.png" alt="Logo"></div>
+        <div class="hero-logo anim anim-d1"><img src="photos/logo_10Nam_A2.png" alt="Logo"></div>
         <div class="label anim anim-d1">THPT TRAN BIEN</div>
         <h1 class="anim anim-d2">A2 SIDE BY SIDE</h1>
         <div class="subtitle anim anim-d3">Ky Niem 10 Nam Ngay Ra Truong</div>
@@ -479,38 +484,50 @@
         <p>Every story starts with a face we remember</p>
     </div>
     <div class="photo-grid">
-        <div class="grid-item"><div class="placeholder">01</div></div>
-        <div class="grid-item"><div class="placeholder">02</div></div>
-        <div class="grid-item"><div class="placeholder">03</div></div>
-        <div class="grid-item"><div class="placeholder">04</div></div>
-        <div class="grid-item"><div class="placeholder">05</div></div>
-        <div class="grid-item"><div class="placeholder">06</div></div>
-        <div class="grid-item"><div class="placeholder">07</div></div>
-        <div class="grid-item"><div class="placeholder">08</div></div>
-        <div class="grid-item"><div class="placeholder">09</div></div>
-        <div class="grid-item"><div class="placeholder">10</div></div>
-        <div class="grid-item"><div class="placeholder">11</div></div>
-        <div class="grid-item"><div class="placeholder">12</div></div>
-        <div class="grid-item"><div class="placeholder">13</div></div>
-        <div class="grid-item"><div class="placeholder">14</div></div>
-        <div class="grid-item"><div class="placeholder">15</div></div>
-        <div class="grid-item"><div class="placeholder">16</div></div>
-        <div class="grid-item"><div class="placeholder">17</div></div>
-        <div class="grid-item"><div class="placeholder">18</div></div>
-        <div class="grid-item"><div class="placeholder">19</div></div>
-        <div class="grid-item"><div class="placeholder">20</div></div>
-        <div class="grid-item"><div class="placeholder">21</div></div>
-        <div class="grid-item"><div class="placeholder">22</div></div>
-        <div class="grid-item"><div class="placeholder">23</div></div>
-        <div class="grid-item"><div class="placeholder">24</div></div>
-        <div class="grid-item"><div class="placeholder">25</div></div>
-        <div class="grid-item"><div class="placeholder">26</div></div>
-        <div class="grid-item"><div class="placeholder">27</div></div>
-        <div class="grid-item"><div class="placeholder">28</div></div>
-        <div class="grid-item"><div class="placeholder">29</div></div>
-        <div class="grid-item"><div class="placeholder">30</div></div>
-        <div class="grid-item"><div class="placeholder">31</div></div>
-        <div class="grid-item"><div class="placeholder">32</div></div>
+        <div class="grid-item"><img src="photos/_MG_2443.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/anhtruc.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Tuan.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/tuanm.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Vinh.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/vinht.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/binh.jpg"></div>
+<div class="grid-item"><img src="photos/_MG_2421.jpg"></div>
+
+<div class="grid-item"><img src="photos/mugshots/Duc.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/dungp.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/dungt.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Duyen.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Hai.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/hieu.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/hoa.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Huong.jpg"></div>
+
+<div class="grid-item"><img src="photos/mugshots/huongq.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Huy.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/khanh.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Kiet.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Linh.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Long.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/ngan.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/nguyet.jpg"></div>
+
+<div class="grid-item"><img src="photos/mugshots/nhumom.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/nhuq.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/phu.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/po.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/quan.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/son.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/thanh.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Thuy.jpg"></div>
+
+<div class="grid-item"><img src="photos/12a2TranBien-7911.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Tien.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Tram.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Trang.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/trangmy.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/Trung.jpg"></div>
+<div class="grid-item"><img src="photos/mugshots/trungm.jpg"></div>
+        <div class="grid-item"><img src="photos/12a2TranBien-7862.jpg"></div>
     </div>
 </div>
 
@@ -518,7 +535,7 @@
 <div class="slide slide-editorial">
     <div class="editorial-block">
         <div class="editorial-image anim anim-d1">
-            <div class="placeholder">[ MEMORY PHOTO 1 ]</div>
+            <div class="placeholder"><img src="photos/12a2TranBien-7921.jpg"></div>
         </div>
         <div class="editorial-text anim anim-d2">
             <div class="tag">Memory</div>
@@ -532,7 +549,7 @@
 <div class="slide slide-editorial">
     <div class="editorial-block" style="direction:rtl">
         <div class="editorial-image anim anim-d1" style="direction:ltr">
-            <div class="placeholder">[ MEMORY PHOTO 2 ]</div>
+            <div class="placeholder"><img src="photos/_MG_2714.jpg"></div>
         </div>
         <div class="editorial-text anim anim-d2" style="direction:ltr">
             <div class="tag">Memory</div>
@@ -546,7 +563,7 @@
 <div class="slide slide-editorial">
     <div class="editorial-block">
         <div class="editorial-image anim anim-d1">
-            <div class="placeholder">[ MEMORY PHOTO 3 ]</div>
+            <div class="placeholder"><img src="photos/12a2TranBien-7911.jpg"></div>
         </div>
         <div class="editorial-text anim anim-d2">
             <div class="tag">Memory</div>
@@ -596,7 +613,7 @@
             <div class="filmstrip-item"><img src="photos/_MG_9556.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/12a2TranBien-7862.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_2477.jpg" loading="lazy" alt=""></div>
-            <div class="filmstrip-item"><img src="photos/_MG_2264.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2662.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/12a2TranBien-7911.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_2662.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_2358.jpg" loading="lazy" alt=""></div>
@@ -615,10 +632,10 @@
             <div class="filmstrip-item"><img src="photos/_MG_2464.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_2779.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_9550.jpg" loading="lazy" alt=""></div>
-            <div class="filmstrip-item"><img src="photos/12a2TranBien-8061.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2662.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_2714.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_2468.jpg" loading="lazy" alt=""></div>
-            <div class="filmstrip-item"><img src="photos/12a2TranBien-7877.jpg" loading="lazy" alt=""></div>
+            <div class="filmstrip-item"><img src="photos/_MG_2662.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_2553.jpg" loading="lazy" alt=""></div>
             <div class="filmstrip-item"><img src="photos/_MG_2449.jpg" loading="lazy" alt=""></div>
         </div>
@@ -727,7 +744,7 @@
                 gridItems.forEach(item => item.classList.remove('glow'));
                 const i = Math.floor(Math.random() * gridItems.length);
                 gridItems[i].classList.add('glow');
-            }, 700);
+            }, 1200);
         }, delay);
     }
 
